@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const info = await transporter.sendMail(mailData);
     return NextResponse.json({ OK: 'Message sent successfully' })
   } catch(error: any) {
-    return NextResponse.json(error.message)
+    return NextResponse.json({error: error}, {status: 400})
   }
 
 
