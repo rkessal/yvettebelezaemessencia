@@ -3,5 +3,11 @@
 import dynamic from "next/dynamic";
 
 export const components = {
-  rich_text: dynamic(() => import("./RichText")),
+  hero: dynamic(() => import("./Hero")),
+  link: dynamic(() => import("./Link")),
+  perguntas: dynamic(() => import("./Perguntas")),
+  section: dynamic(() => import("./Section")),
+  service: dynamic(() => import("./Service")),
+  sobre_nos: dynamic(() => import("./SobreNos")),
+  welcome: dynamic(() => import("./Welcome")),
 };

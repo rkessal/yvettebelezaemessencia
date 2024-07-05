@@ -1,0 +1,33 @@
+{
+  "id": "link",
+  "type": "SharedSlice",
+  "name": "Link",
+  "description": "Link",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "url": {
+          "type": "Text",
+          "config": {
+            "label": "url",
+            "placeholder": ""
+          }
+        },
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "label",
+            "placeholder": ""
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
