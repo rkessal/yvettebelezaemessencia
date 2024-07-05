@@ -3,15 +3,15 @@ import { NextResponse } from 'next/server'
 
 const config = {
   transporter: {
-    port: process.env.NODEMAILER_PORT as unknown as number,
-    host: process.env.NODEMAILER_HOST,
+    port: process.env.NEXT_PUBLIC_NODEMAILER_PORT as unknown as number,
+    host: process.env.NEXT_PUBLIC_NODEMAILER_HOST,
     auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS,
+      user: process.env.NEXT_PUBLIC_NODEMAILER_USER,
+      pass: process.env.NEXT_PUBLIC_NODEMAILER_PASS,
     },
     secure: true,
   },
-  target: process.env.NODEMAILER_TARGET
+  target: process.env.NEXT_PUBLIC_NODEMAILER_TARGET
 };
 
 const transporter = nodemailer.createTransport(config.transporter);
