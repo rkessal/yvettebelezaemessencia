@@ -28,8 +28,8 @@ const Services = ({services, toggleServices}: Props) => {
         {
           services.map((s, index) => (
             currentService === index && 
-            <div className='hidden md:block'>
-              <Service key={index} slice={s} index={index} slices={services} context={
+            <div key={index} className='hidden md:block'>
+              <Service  slice={s} index={index} slices={services} context={
                 {
                   currentService,
                   setCurrentService
