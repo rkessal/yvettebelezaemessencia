@@ -66,20 +66,18 @@ const Categories = ({categories}: Props) => {
       setLoading(true)
       console.log(categoryRef.current)
 
-      gsap.to(categoryRef?.current, {
-        autoAlpha: 0,
-        yPercent: 2,
-        duration: 0.5,
-        onComplete: () => {
-          change()
-          setLoading(false)
-        }
-      })
+      // gsap.to(categoryRef?.current, {
+      //   autoAlpha: 0,
+      //   yPercent: 2,
+      //   duration: 0.5,
+      //   onComplete: () => {
+      //     change()
+      //     setLoading(false)
+      //   }
+      // })
 
-      if (!categoryRef.current) {
-        change()
-        setLoading(false)
-      }
+      change()
+      setLoading(false)
   })
 
   return (
