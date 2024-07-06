@@ -4,8 +4,8 @@ import Category from './Category'
 import { GroupField } from '@prismicio/client'
 import { HomeDocumentDataCategoriesItem, Simplify } from '../../../prismicio-types'
 import { PrismicImage } from '@prismicio/react'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 type Props = {
   categories: GroupField<Simplify<HomeDocumentDataCategoriesItem>> 
@@ -60,11 +60,13 @@ const Categories = ({categories}: Props) => {
 
   const onClick = contextSafe((fn: () => Function | void) => {
       const change = fn()
+      console.log(gsap)
+      console.log(categoryRef.current)
+      console.log(change, loading)
 
       if (loading || !change) return
 
       setLoading(true)
-      console.log(categoryRef.current)
 
       gsap.to(categoryRef?.current, {
         autoAlpha: 0,
@@ -75,6 +77,7 @@ const Categories = ({categories}: Props) => {
           setLoading(false)
         }
       })
+
 
       // change()
       // setLoading(false)
