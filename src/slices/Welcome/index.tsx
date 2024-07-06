@@ -22,22 +22,22 @@ export type WelcomeProps = SliceComponentProps<Content.WelcomeSlice>;
 const Welcome = ({ slice }: WelcomeProps): JSX.Element => {
   const descriptionRef = useRef<HTMLDivElement | null>(null);
 
-  const handleResize = () => {
+  const handleResize = (): SplitType | undefined => {
     const paragraph = descriptionRef.current?.querySelector('p');
-    if (paragraph) {
-      SplitType.create(paragraph, { 
-        types: 'lines,words',
-        tagName: 'span',
-        lineClass: 'description-line',
-        wordClass: 'description-word',
-      });
-    }
+    if (!paragraph) return
+
+    return new SplitType(paragraph, { 
+      types: 'lines,words',
+      tagName: 'span',
+      lineClass: 'overflow-hidden',
+    });
+   
   };
 
   useGSAP(
     () => {
-      handleResize();
-      animateParagraph('.description-line', '.description-word')
+      const paragraphs = handleResize();
+      animateParagraph(paragraphs?.lines, paragraphs?.words)
       window.addEventListener('resize', handleResize);
 
       return () => {

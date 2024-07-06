@@ -12,9 +12,3 @@ html {
     font-size: calc((100vw / 768) * 16);
   }
 }
-
-.service-description-line, 
-.description-line,
-.category-description-line {
-  overflow-y: hidden
-}

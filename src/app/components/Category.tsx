@@ -2,13 +2,12 @@
 import { PrismicRichText } from '@prismicio/react'
 import React, { Dispatch, SetStateAction, useRef } from 'react'
 import Services from './Services'
-import { useGSAP } from '@gsap/react'
+import { ContextSafeFunc, useGSAP } from '@gsap/react'
 import SplitType from 'split-type'
 import { animateParagraph } from '../animations/paragraph'
 
 type Props = {
   currentIndex: number
-  setCurrentIndex: Dispatch<SetStateAction<number>>
   toggleServices: Dispatch<SetStateAction<boolean>>
   showServices: boolean
   slice: any
@@ -16,27 +15,27 @@ type Props = {
   setRef: (ref: React.MutableRefObject<HTMLDivElement | null>) => void
 }
 
-const Category = ({setRef, showServices, toggleServices, currentIndex, setCurrentIndex, slice, index}: Props) => {
+const Category = ({setRef, showServices, toggleServices, currentIndex, slice, index}: Props) => {
   const categoryRef = useRef<HTMLDivElement | null>(null)
 
-  const handleResize = () => {
+  const handleResize = (): SplitType | undefined => {
     const paragraph = categoryRef.current?.querySelectorAll('p');
-    if (paragraph) {
-      SplitType.create(paragraph, { 
-        types: 'lines,words',
-        tagName: 'span',
-        lineClass: 'category-description-line',
-        wordClass: 'category-description-word',
-      });
-    }
+    if (!paragraph) return
+
+    const split = new SplitType(paragraph, { 
+      types: 'lines,words',
+      tagName: 'span',
+      lineClass: 'overflow-hidden',
+    });
+    return split;
   };
 
   useGSAP(
     () => {
       if (currentIndex === index) {
         setRef(categoryRef)
-        handleResize();
-        animateParagraph(null, '.category-description-word')
+        const paragraphs = handleResize();
+        animateParagraph(paragraphs?.lines, paragraphs?.words)
         window.addEventListener('resize', handleResize);
       }
 
