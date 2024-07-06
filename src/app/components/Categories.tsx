@@ -64,6 +64,7 @@ const Categories = ({categories}: Props) => {
       if (loading || !change) return
 
       setLoading(true)
+      console.log(categoryRef.current)
 
       gsap.to(categoryRef?.current, {
         autoAlpha: 0,
@@ -74,6 +75,11 @@ const Categories = ({categories}: Props) => {
           setLoading(false)
         }
       })
+
+      if (!categoryRef.current) {
+        change()
+        setLoading(false)
+      }
   })
 
   return (
