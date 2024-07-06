@@ -7,12 +7,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="font-raleway bg-beige h-full">
+    <html lang="pt-PT" className="h-full font-raleway bg-beige">
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/hgn4pnn.css"/>
       </head>
-      <body>{children}</body>
-      <PrismicPreview repositoryName={repositoryName} />
+        <body>{children}</body>
+        <PrismicPreview repositoryName={repositoryName} />
     </html>
   );
 }

@@ -1,10 +1,7 @@
+import './globals.css'
 import { Metadata } from "next";
 
 import { PrismicImage, PrismicRichText } from "@prismicio/react";
-import * as prismic from "@prismicio/client";
-
-import './globals.css'
-
 import { createClient } from "@/prismicio";
 import Hero from "@/slices/Hero";
 import Link from "next/link";
@@ -17,10 +14,10 @@ import ContactForm from "./components/ContactForm";
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient();
-  const home = await client.getByUID("page", "home");
+  const home = await client.getSingle("home");
 
   return {
-    title: prismic.asText(home.data.title),
+    title: home.data.meta_title,
     description: home.data.meta_description,
     openGraph: {
       title: home.data.meta_title ?? undefined,
