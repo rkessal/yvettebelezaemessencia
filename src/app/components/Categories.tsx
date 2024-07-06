@@ -61,7 +61,7 @@ const Categories = ({categories}: Props) => {
 
   const { contextSafe } = useGSAP(() => {}, { scope: switcherRef})
 
-  const onClick = contextSafe((fn: () => Function | void) => {
+  const onClick = (fn: () => Function | void) => {
       const change = fn()
       console.log(gsap)
       console.log(categoryRef.current)
@@ -78,13 +78,9 @@ const Categories = ({categories}: Props) => {
         onComplete: () => {
           change()
           setLoading(false)
-        }
+        },
       })
-
-
-      // change()
-      // setLoading(false)
-  })
+  }
 
   return (
     <>

@@ -1,3 +1,4 @@
+"use client"
 import { PrismicRichText } from '@prismicio/react'
 import React, { Dispatch, SetStateAction, useRef } from 'react'
 import Services from './Services'
