@@ -1,4 +1,3 @@
-'use client'
 import React, { useRef, useState } from 'react'
 import Category from './Category'
 import { GroupField } from '@prismicio/client'
