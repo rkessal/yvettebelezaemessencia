@@ -55,7 +55,7 @@ const Categories = ({categories}: Props) => {
           ease: 'power4.out',
         }, '<')
     },
-    { dependencies: [currentIndexImage] }
+    { dependencies: [currentIndexImage, currentIndex] }
   )
 
   const onClick = contextSafe((fn: () => Function | void) => {
@@ -68,7 +68,7 @@ const Categories = ({categories}: Props) => {
 
       setLoading(true)
 
-      gsap.to(categoryRef?.current, {
+      gsap.to(categoryRef.current, {
         autoAlpha: 0,
         yPercent: 2,
         duration: 0.5,
