@@ -18,27 +18,25 @@ export type ServiceProps = SliceComponentProps<Content.ServiceSlice>;
 const Service = ({ slice, context, index }: ServiceProps): JSX.Element => {
   const descriptionRef = useRef<HTMLDivElement | null>(null);
   // @ts-ignore
-  const { currentService, setCurrentService } = context
+  const { currentService } = context
 
-  const handleResize = () => {
+  const handleResize = (): SplitType | undefined => {
     const paragraphs = descriptionRef.current?.querySelectorAll('p, li');
-    if (paragraphs) {
-      const paragraphArray = Array.from(paragraphs) as HTMLElement[];
-      SplitType.create(paragraphArray, { 
-        types: 'lines,words',
-        tagName: 'span',
-        lineClass: 'service-description-line',
-        wordClass: 'service-description-word',
-      });
-    }
+    if (!paragraphs) return
+    const paragraphArray = Array.from(paragraphs) as HTMLElement[];
+    return new SplitType(paragraphArray, { 
+      types: 'lines,words',
+      tagName: 'span',
+      lineClass: 'overflow-hidden',
+    });
   };
 
   useGSAP(
     () => {
 
       if (currentService != undefined) {
-        handleResize();
-        animateParagraph(null, '.service-description-word')
+        const paragraphs = handleResize();
+        animateParagraph(null, paragraphs?.words)
         window.addEventListener('resize', handleResize);
       }
 

@@ -5,7 +5,7 @@ import { GroupField } from '@prismicio/client'
 import { HomeDocumentDataCategoriesItem, Simplify } from '../../../prismicio-types'
 import { PrismicImage } from '@prismicio/react'
 import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
+import { ContextSafeFunc, useGSAP } from '@gsap/react'
 
 type Props = {
   categories: GroupField<Simplify<HomeDocumentDataCategoriesItem>> 
@@ -19,6 +19,9 @@ const Categories = ({categories}: Props) => {
 
   const imageCategoryContainerRef = useRef<HTMLDivElement | null>(null)
   const categoryRef = useRef<HTMLDivElement | null>(null)
+  const switcherRef = useRef<HTMLDivElement | null>(null)
+
+  let categoryContextSafe: ContextSafeFunc
 
   const isFirst = () => {
     return currentIndex === 0
@@ -40,7 +43,7 @@ const Categories = ({categories}: Props) => {
     return () => setCurrentIndex(currentIndex + 1)
   }
 
-  const { contextSafe } = useGSAP(
+  useGSAP(
     () => {
       const tl = gsap.timeline()
       tl
@@ -55,8 +58,11 @@ const Categories = ({categories}: Props) => {
           ease: 'power4.out',
         }, '<')
     },
-    { dependencies: [currentIndexImage, currentIndex] }
+    { dependencies: [currentIndexImage] }
   )
+
+  const { contextSafe } = useGSAP(() => {
+  }, { scope: categoryRef})
 
   const onClick = contextSafe((fn: () => Function | void) => {
       const change = fn()
@@ -75,7 +81,7 @@ const Categories = ({categories}: Props) => {
         onComplete: () => {
           change()
           setLoading(false)
-        }
+        },
       })
 
 
@@ -104,7 +110,6 @@ const Categories = ({categories}: Props) => {
           showServices={showServices} 
           toggleServices={toggleServices}
           key={index} index={index} 
-          setCurrentIndex={setCurrentIndex} 
           currentIndex={currentIndex} 
           slice={category.service.data} 
           setRef={(ref) => categoryRef.current = ref.current
@@ -112,7 +117,7 @@ const Categories = ({categories}: Props) => {
         />
       ))
     }
-      <div className='flex flex-row'>
+      <div ref={switcherRef} className='flex flex-row'>
         <div onClick={() => onClick(onClickPrev)} className='hover:cursor-pointer relative mr-[1rem]'>
           <svg className='h-[7.5rem] w-[7.5rem]' width="119" height="119" viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="59.5" cy="59.5" r="58" transform="rotate(-180 59.5 59.5)" stroke="#665E5A" strokeWidth="3"/>
