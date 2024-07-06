@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { Content } from "@prismicio/client";
 import { PrismicImage, PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import * as prismic from "@prismicio/client";
