@@ -1,9 +1,11 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Category from './Category'
 import { GroupField } from '@prismicio/client'
 import { HomeDocumentDataCategoriesItem, Simplify } from '../../../prismicio-types'
 import { PrismicImage } from '@prismicio/react'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 type Props = {
   categories: GroupField<Simplify<HomeDocumentDataCategoriesItem>> 
@@ -11,7 +13,12 @@ type Props = {
 
 const Categories = ({categories}: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndexImage, setCurrentIndexImage] = useState(0)
   const [showServices, toggleServices] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const imageCategoryContainerRef = useRef<HTMLDivElement | null>(null)
+  const categoryRef = useRef<HTMLDivElement | null>(null)
 
   const isFirst = () => {
     return currentIndex === 0
@@ -23,22 +30,60 @@ const Categories = ({categories}: Props) => {
 
   const onClickPrev = () => {
     if (isFirst()) return
-    setCurrentIndex(currentIndex - 1)
+    setCurrentIndexImage(currentIndex - 1)
+    return () => setCurrentIndex(currentIndex - 1)
   }
 
   const onClickNext = () => {
     if (isLast()) return
-    setCurrentIndex(currentIndex + 1)
+    setCurrentIndexImage(currentIndex + 1)
+    return () => setCurrentIndex(currentIndex + 1)
   }
+
+  const { contextSafe } = useGSAP(
+    () => {
+      const tl = gsap.timeline()
+      tl
+        .to('.category-image-slider', {
+          duration: 1,
+          ease: 'power4.out',
+          translateX: `-${currentIndexImage * 100}%`
+        })
+        .from(`[data-category-number="${currentIndexImage}"]`, {
+          scale: 1.5,
+          duration: 1.5,
+          ease: 'power4.out',
+        }, '<')
+    },
+    { dependencies: [currentIndexImage] }
+  )
+
+  const onClick = contextSafe((fn: () => Function | void) => {
+      const change = fn()
+
+      if (loading || !change) return
+
+      setLoading(true)
+
+      gsap.to(categoryRef?.current, {
+        autoAlpha: 0,
+        yPercent: 2,
+        duration: 0.5,
+        onComplete: () => {
+          change()
+          setLoading(false)
+        }
+      })
+  })
+
   return (
     <>
-    <div className="max-h-[40rem] md:w-[40.125rem] overflow-hidden md:mr-[2rem]">
-      <div className="flex h-full transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+    <div ref={imageCategoryContainerRef} className="max-h-[40rem] md:w-[40.125rem] overflow-hidden md:mr-[2rem]">
+      <div className="flex h-full category-image-slider"
         >
       {
-        categories.map((category: any) => (
-          <figure key={category.service.id} className="flex-none block w-full h-full">
+        categories.map((category: any, index: number) => (
+          <figure data-category-number={index} key={category.service.id} className="flex-none block w-full h-full">
                 <PrismicImage className="object-cover w-full h-full"  field={category.service.data.image} />
           </figure>
           ))
@@ -48,16 +93,20 @@ const Categories = ({categories}: Props) => {
     <div>
     {
       categories.map((category: any, index) => (
-        <Category showServices={showServices} 
-        toggleServices={toggleServices}
-        key={index} index={index} 
-        setCurrentIndex={setCurrentIndex} 
-        currentIndex={currentIndex} 
-        slice={category.service.data} />
+        <Category 
+          showServices={showServices} 
+          toggleServices={toggleServices}
+          key={index} index={index} 
+          setCurrentIndex={setCurrentIndex} 
+          currentIndex={currentIndex} 
+          slice={category.service.data} 
+          setRef={(ref) => categoryRef.current = ref.current
+          }
+        />
       ))
     }
       <div className='flex flex-row'>
-        <div onClick={() => onClickPrev()} className='hover:cursor-pointer relative mr-[1rem]'>
+        <div onClick={() => onClick(onClickPrev)} className='hover:cursor-pointer relative mr-[1rem]'>
           <svg className='h-[7.5rem] w-[7.5rem]' width="119" height="119" viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="59.5" cy="59.5" r="58" transform="rotate(-180 59.5 59.5)" stroke="#665E5A" strokeWidth="3"/>
           </svg>
@@ -67,7 +116,7 @@ const Categories = ({categories}: Props) => {
             <path d="M0.342284 14.8993C5.40045 14.8993 16.1557 17.7745 18.7114 29.2751" stroke="#665E5A" strokeWidth="4"/>
           </svg>
         </div>
-        <div onClick={() => onClickNext()} className='hover:cursor-pointer relative mr-[1rem]'>
+        <div onClick={() => onClick(onClickNext)} className='hover:cursor-pointer relative mr-[1rem]'>
           <svg className='h-[7.5rem] w-[7.5rem]' width="119" height="119" viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="59.5" cy="59.5" r="58" transform="rotate(-180 59.5 59.5)" stroke="#665E5A" strokeWidth="3"/>
           </svg>

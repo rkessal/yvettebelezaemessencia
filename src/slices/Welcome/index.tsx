@@ -1,5 +1,15 @@
+"use client"
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
+import { useRef } from "react";
+import SplitType from "split-type";
+import distributeByPosition from "@/app/utils/gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { animateParagraph } from "@/app/animations/paragraph";
+
+gsap.registerPlugin(ScrollTrigger)
 
 /**
  * Props for `Welcome`.
@@ -10,6 +20,33 @@ export type WelcomeProps = SliceComponentProps<Content.WelcomeSlice>;
  * Component for "Welcome" Slices.
  */
 const Welcome = ({ slice }: WelcomeProps): JSX.Element => {
+  const descriptionRef = useRef<HTMLDivElement | null>(null);
+
+  const handleResize = () => {
+    const paragraph = descriptionRef.current?.querySelector('p');
+    if (paragraph) {
+      SplitType.create(paragraph, { 
+        types: 'lines,words',
+        tagName: 'span',
+        lineClass: 'description-line',
+        wordClass: 'description-word',
+      });
+    }
+  };
+
+  useGSAP(
+    () => {
+      handleResize();
+      animateParagraph('.description-line', '.description-word')
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    },
+    { scope: descriptionRef }
+);
+
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -20,7 +57,7 @@ const Welcome = ({ slice }: WelcomeProps): JSX.Element => {
         <h1 className="mb-[1rem] font-seasons text-center text-[3.375rem] text-dark">
           <PrismicRichText field={slice.primary.title} />
         </h1>
-        <div className="md:text-[1.125rem] text-dark text-center">
+        <div ref={descriptionRef} className="md:text-[1.125rem] text-dark text-center">
           <PrismicRichText field={slice.primary.description} />
         </div>
         <svg className="mt-[3rem]" width="31" height="52" viewBox="0 0 31 52" fill="none" xmlns="http://www.w3.org/2000/svg">
