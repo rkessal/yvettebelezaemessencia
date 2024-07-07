@@ -12,3 +12,16 @@ html {
     font-size: calc((100vw / 768) * 16);
   }
 }
+
+.section-container {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+[data-clip-path] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.transition-height {
+  transition: height 1s ease-out;
+  overflow: hidden;
+}
