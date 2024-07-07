@@ -66,9 +66,6 @@ const Categories = ({categories}: Props) => {
 
   const onClick = contextSafe((fn: () => Function | void) => {
       const change = fn()
-      console.log(gsap)
-      console.log(categoryRef.current)
-      console.log(change, loading)
 
       if (loading || !change) return
 
