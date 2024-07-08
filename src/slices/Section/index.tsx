@@ -25,7 +25,7 @@ const Section = ({ slice, context, index }: SectionProps): JSX.Element => {
     return new SplitType(paragraphs, { 
       types: 'lines,words',
       tagName: 'span',
-      lineClass: 'overflow-hidden',
+      lineClass: 'overflow-hidden line',
     });
   };
 
@@ -37,7 +37,7 @@ const Section = ({ slice, context, index }: SectionProps): JSX.Element => {
     window.addEventListener('resize', handleResize)
 
     tl.from(sectionContainerRef.current, {
-      clipPath: 'polygon(40% 40%, 60% 40%, 60% 60%, 40% 60%)',
+      clipPath: 'polygon(30% 40%, 70% 40%, 70% 100%, 30% 100%)',
       scrollTrigger: {
         trigger: imageContainerRef.current,
         scrub: 1,
@@ -53,15 +53,15 @@ const Section = ({ slice, context, index }: SectionProps): JSX.Element => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="section-container relative mt-[6rem] h-[40rem]"
+      className="section-container relative w-full mt-[6rem] h-[60rem] md:h-[100vh]"
       //@ts-ignore
       id={context[index]}
       ref={sectionContainerRef}
     >
-      <figure ref={imageContainerRef} className="section-image-container absolute top-0 left-0 w-full h-[40rem] overflow-hidden">
+      <figure ref={imageContainerRef} className="absolute top-0 left-0 w-full h-full overflow-hidden section-image-container">
         <PrismicImage className="object-cover w-full h-full" field={slice.primary.image} />
       </figure>
-      <div className="mb-[2rem] md:mb-[5rem] text-dark absolute bottom-0 left-[50%] translate-x-[-50%] z-10 text-center md:max-w-[47.375rem]">
+      <div className="mb-[5rem] text-dark absolute bottom-0 left-[50%] translate-x-[-50%] z-10 text-center w-full md:max-w-[47.375rem]">
         <h1 className="mb-[2rem] mt-[2rem] uppercase md:text-[1rem] tracking-[0.5rem]">
           <PrismicRichText field={slice.primary.title} />
         </h1>

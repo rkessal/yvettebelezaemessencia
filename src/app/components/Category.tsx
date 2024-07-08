@@ -25,7 +25,7 @@ const Category = ({setRef, showServices, toggleServices, currentIndex, slice, in
     const split = new SplitType(paragraph, { 
       types: 'lines,words',
       tagName: 'span',
-      lineClass: 'overflow-hidden',
+      lineClass: 'overflow-hidden line',
     });
     return split;
   };

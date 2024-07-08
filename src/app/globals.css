@@ -25,3 +25,15 @@ html {
   transition: height 1s ease-out;
   overflow: hidden;
 }
+
+.line {
+  margin-top: -6px
+}
+
+.word {
+  vertical-align: text-top;
+  /* padding-bottom: 0.5ch;
+  margin-bottom: -0.7ch;
+  padding-top: 0.4ch;
+  margin-top: -0.7ch; */
+}

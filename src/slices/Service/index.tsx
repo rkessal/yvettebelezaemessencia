@@ -27,7 +27,7 @@ const Service = ({ slice, context, index }: ServiceProps): JSX.Element => {
     return new SplitType(paragraphArray, { 
       types: 'lines,words',
       tagName: 'span',
-      lineClass: 'overflow-hidden',
+      lineClass: 'overflow-hidden line',
     });
   };
 
