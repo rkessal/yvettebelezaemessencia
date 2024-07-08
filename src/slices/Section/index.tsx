@@ -25,7 +25,8 @@ const Section = ({ slice, context, index }: SectionProps): JSX.Element => {
     return new SplitType(paragraphs, { 
       types: 'lines,words',
       tagName: 'span',
-      lineClass: 'overflow-hidden line',
+      lineClass: 'overflow-hidden overflow-fix-line',
+      wordClass: 'overflow-fix-word',
     });
   };
 
@@ -37,7 +38,7 @@ const Section = ({ slice, context, index }: SectionProps): JSX.Element => {
     window.addEventListener('resize', handleResize)
 
     tl.from(sectionContainerRef.current, {
-      clipPath: 'polygon(30% 40%, 70% 40%, 70% 100%, 30% 100%)',
+      clipPath: 'polygon(30% 60%, 70% 60%, 70% 100%, 30% 100%)',
       scrollTrigger: {
         trigger: imageContainerRef.current,
         scrub: 1,

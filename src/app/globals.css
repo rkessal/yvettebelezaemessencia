@@ -26,14 +26,10 @@ html {
   overflow: hidden;
 }
 
-.line {
+.overflow-fix-line {
   margin-top: -6px
 }
 
-.word {
+.overflow-fix-word {
   vertical-align: text-top;
-  /* padding-bottom: 0.5ch;
-  margin-bottom: -0.7ch;
-  padding-top: 0.4ch;
-  margin-top: -0.7ch; */
 }

@@ -29,7 +29,7 @@ const Welcome = ({ slice }: WelcomeProps): JSX.Element => {
     return new SplitType(paragraph, { 
       types: 'lines,words',
       tagName: 'span',
-      lineClass: 'overflow-hidden line',
+      lineClass: 'overflow-hidden',
     });
    
   };

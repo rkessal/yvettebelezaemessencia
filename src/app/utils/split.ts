@@ -8,6 +8,6 @@ export const split = (target: MutableRefObject<HTMLDivElement | null>): SplitTyp
   return new SplitType(paragraphArray, { 
     types: 'lines,words',
     tagName: 'span',
-    lineClass: 'overflow-hidden line',
+    lineClass: 'overflow-hidden',
   });
 };
