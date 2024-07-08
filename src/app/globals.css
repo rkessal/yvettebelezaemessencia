@@ -25,3 +25,11 @@ html {
   transition: height 1s ease-out;
   overflow: hidden;
 }
+
+.overflow-fix-line {
+  margin-top: -6px
+}
+
+.overflow-fix-word {
+  vertical-align: text-top;
+}

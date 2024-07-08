@@ -8,10 +8,10 @@ export const animateParagraph = (
   markers?: boolean
   ) => {
   return gsap.from(element, {
-    yPercent: 100,
+    yPercent: 150,
     delay: 0.2,
     ease: "power4.out",
-    duration: 1.5,
+    duration: 2,
     scrollTrigger: {
       trigger: trigger,
       start: start,

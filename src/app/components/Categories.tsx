@@ -49,12 +49,12 @@ const Categories = ({categories}: Props) => {
       tl
         .to('.category-image-slider', {
           duration: 1,
-          ease: 'power4.out',
+          ease: 'power4.inOut',
           translateX: `-${currentIndexImage * 100}%`
         })
-        .from(`[data-category-number="${currentIndexImage}"]`, {
+        .from(`[data-category-image="${currentIndexImage}"]`, {
           scale: 1.5,
-          duration: 1.5,
+          duration: 2,
           ease: 'power4.out',
         }, '<')
     },
@@ -80,10 +80,6 @@ const Categories = ({categories}: Props) => {
           setLoading(false)
         },
       })
-
-
-      // change()
-      // setLoading(false)
   })
 
   return (
@@ -93,8 +89,8 @@ const Categories = ({categories}: Props) => {
         >
       {
         categories.map((category: any, index: number) => (
-          <figure data-category-number={index} key={category.service.id} className="flex-none block w-full h-full">
-                <PrismicImage className="object-cover w-full h-full"  field={category.service.data.image} />
+          <figure data-category-number={index} key={category.service.id} className="flex-none block w-full h-full overflow-hidden">
+                <PrismicImage data-category-image={index} className="object-cover w-full h-full"  field={category.service.data.image} />
           </figure>
           ))
       }
