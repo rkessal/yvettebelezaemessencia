@@ -346,12 +346,67 @@ export type ServiceCategoryDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for whatsapp documents
+ */
+interface WhatsappDocumentData {
+  /**
+   * number field in *whatsapp*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: whatsapp.number
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  number: prismic.KeyTextField;
+
+  /**
+   * image field in *whatsapp*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: whatsapp.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * text field in *whatsapp*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: whatsapp.text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  text: prismic.RichTextField;
+}
+
+/**
+ * whatsapp document from Prismic
+ *
+ * - **API ID**: `whatsapp`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type WhatsappDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<WhatsappDocumentData>,
+    "whatsapp",
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | FooterDocument
   | HomeDocument
   | NavigationDocument
   | PageDocument
-  | ServiceCategoryDocument;
+  | ServiceCategoryDocument
+  | WhatsappDocument;
 
 /**
  * Primary content in *Hero → Primary*
@@ -817,6 +872,8 @@ declare module "@prismicio/client" {
       ServiceCategoryDocument,
       ServiceCategoryDocumentData,
       ServiceCategoryDocumentDataSlicesSlice,
+      WhatsappDocument,
+      WhatsappDocumentData,
       AllDocumentTypes,
       HeroSlice,
       HeroSliceDefaultPrimary,

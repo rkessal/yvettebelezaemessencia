@@ -11,6 +11,7 @@ import Section from "@/slices/Section";
 import SobreNos from "@/slices/SobreNos";
 import Perguntas from "@/slices/Perguntas";
 import ContactForm from "./components/ContactForm";
+import Whatsapp from './components/Whatsapp';
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient();
@@ -38,9 +39,11 @@ export default async function Index() {
     ]  });
   const navigation = await client.getSingle('navigation')
   const footer = await client.getSingle('footer')
+  const whatsapp = await client.getSingle('whatsapp')
 
   return (
     <div className="md:text-[1rem] text-[1.75rem]">
+      <Whatsapp number={whatsapp.data.number} image={whatsapp.data.image} />
     <nav className="absolute top-0 left-0 z-10 flex justify-center w-full mx-auto mt-10">
       <ul className="flex flex-row">
       {
